@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.*;
 
+
 /**
  * Class that contains helper methods for the Review Lab
  **/
@@ -163,17 +164,23 @@ public class Review {
     }
   }
 
+
   public static double totalSentiment(String fileName){
 
     String customerReview = textToString(fileName);
     double count = 0;
     
-    while (customerReview.length() > 0){
-      int spacePlace = customerReview.indexOf("");
+    while (customerReview.length() > 0 && customerReview.indexOf(" ") != -1){
 
+      // find the spaces
+      int spacePlace = customerReview.indexOf(" ");
+      // get the word
       String word = customerReview.substring(0, spacePlace);
-
+      // reset the customer review
       customerReview = customerReview.substring(spacePlace + 1);
+      // get word sentiment
+      count += sentimentVal(word);
+
     }
 
     return count;
