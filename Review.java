@@ -168,10 +168,9 @@ public class Review {
   public static double totalSentiment(String fileName){
 
     String customerReview = textToString(fileName);
-    double count = 0;
+    double count = 0.0;
     
     while (customerReview.length() > 0 && customerReview.indexOf(" ") != -1){
-
       // find the spaces
       int spacePlace = customerReview.indexOf(" ");
       // get the word
@@ -179,9 +178,10 @@ public class Review {
       // reset the customer review
       customerReview = customerReview.substring(spacePlace + 1);
       // get word sentiment
-      count += sentimentVal(word);
+      count += sentimentVal(removePunctuation(word));
 
     }
+    count += sentimentVal(removePunctuation(customerReview));
 
     return count;
     }
