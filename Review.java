@@ -185,4 +185,24 @@ public class Review {
 
     return count;
     }
+
+    public static int starRating(String fileName){
+      double sentiment = totalSentiment(fileName);
+      if (sentiment >= 75){
+        return 5;
+      }
+      else if (sentiment >= 50){
+        return 4;
+      }
+      else if (sentiment >= 35){
+        return 3;
+      }
+      else if (sentiment >= 15){
+        return 4;
+      }
+      else {
+        return 1;
+      }
+      
+    }
   }
