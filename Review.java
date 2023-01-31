@@ -38,7 +38,7 @@ public class Review {
       Scanner input = new Scanner(new File("positiveAdjectives.txt"));
       while(input.hasNextLine()){
         String temp = input.nextLine().trim();
-        System.out.println(temp);
+        // System.out.println(temp);
         posAdjectives.add(temp);
       }
       input.close();
@@ -198,11 +198,35 @@ public class Review {
         return 3;
       }
       else if (sentiment >= 15){
-        return 4;
+        return 2;
       }
       else {
         return 1;
       }
       
+    }
+
+    public static String fakeReview(String fileName){
+      String oldReview = textToString(fileName);
+      String newReview = "";
+
+      while (oldReview.length() > 0 && oldReview.indexOf("*") != -1){
+        int star = oldReview.indexOf("*");
+        int starSpace = oldReview.indexOf(" ", star);
+
+        newReview += oldReview.substring(0, star);
+
+        newReview += randomAdjective();
+        newReview += " ";
+        
+        if (starSpace > 0){
+          oldReview = oldReview.substring(starSpace+1);
+        }
+
+      }
+
+      newReview += oldReview;
+      return newReview;
+
     }
   }
