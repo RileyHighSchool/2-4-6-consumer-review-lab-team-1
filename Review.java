@@ -206,9 +206,11 @@ public class Review {
       
     }
 
-    public static String fakeReview(String fileName){
+    public static String fakeReview(String fileName, boolean typeOfReview){
+      // Boolean typeOfReview = true;
       String oldReview = textToString(fileName);
       String newReview = "";
+
 
       while (oldReview.length() > 0 && oldReview.indexOf("*") != -1){
         int star = oldReview.indexOf("*");
@@ -216,8 +218,14 @@ public class Review {
 
         newReview += oldReview.substring(0, star);
 
-        newReview += randomAdjective();
-        newReview += " ";
+        if (typeOfReview == true){
+          newReview += randomPositiveAdj();
+          newReview += " ";
+        }
+        else {
+          newReview += randomNegativeAdj();
+          newReview += " ";
+        }
         
         if (starSpace > 0){
           oldReview = oldReview.substring(starSpace+1);
