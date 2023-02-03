@@ -1,4 +1,1 @@
-<<<<<<< HEAD
-=======
-This toy I bought is absolutely *chewy and the sounds it makes are *garbage along with the *horrendous colors.
->>>>>>> refs/remotes/origin/main
+This -toy I bought is absolutely *chewy and the sounds it makes are *garbage along with the *horrendous -colors.

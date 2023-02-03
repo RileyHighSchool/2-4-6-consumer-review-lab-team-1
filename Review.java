@@ -14,6 +14,7 @@ public class Review {
   private static HashMap<String, Double> sentiment = new HashMap<String, Double>();
   private static ArrayList<String> posAdjectives = new ArrayList<String>();
   private static ArrayList<String> negAdjectives = new ArrayList<String>();
+  private static ArrayList<String> randNouns = new ArrayList<String>();
  
   
   private static final String SPACE = " ";
@@ -57,7 +58,19 @@ public class Review {
     }
     catch(Exception e){
       System.out.println("Error reading or parsing negativeAdjectives.txt");
-    }   
+    }
+    
+    //read in the random nouns in randomNouns.txt
+    try {
+      Scanner input = new Scanner(new File("randomNouns.txt"));
+      while(input.hasNextLine()){
+        randNouns.add(input.nextLine().trim());
+      }
+      input.close();
+    }
+    catch(Exception e){
+      System.out.println("Error reading or parsing randomNouns.txt");
+    }
   }
   
   /** 
@@ -115,7 +128,7 @@ public class Review {
     return punc;
   }
 
-      /**
+   /**
    * Returns the word after removing any beginning or ending punctuation
    */
   public static String removePunctuation( String word )
@@ -164,7 +177,16 @@ public class Review {
     }
   }
 
+  /** 
+   * Gets random nouns and returns them
+   **/
+  public static String randomNouns()
+  {
+    int index = (int)(Math.random() * randNouns.size());
+    return randNouns.get(index);
+  }
 
+  // TotalSentiment
   public static double totalSentiment(String fileName){
 
     String customerReview = textToString(fileName);
@@ -186,6 +208,7 @@ public class Review {
     return count;
     }
 
+    // StarRating
     public static int starRating(String fileName){
       double sentiment = totalSentiment(fileName);
       if (sentiment >= 75){
@@ -206,6 +229,7 @@ public class Review {
       
     }
 
+    // Ranadom adjectives
     public static String fakeReview(String fileName, boolean typeOfReview){
       // Boolean typeOfReview = true;
       String oldReview = textToString(fileName);
@@ -237,4 +261,47 @@ public class Review {
       return newReview;
 
     }
-  }
+    
+    // Random nouns
+    public static String chooseRandom(String fileName, boolean nOrAdj){
+      String oldReview = textToString(fileName);
+      String newReview = "";
+
+      while (oldReview.length() > 0 && oldReview.indexOf("*") != -1 && oldReview.indexOf("-") != -1){
+        int star = oldReview.indexOf("*");
+        int starSpace = oldReview.indexOf(" ", star); 
+        int dash = oldReview.indexOf("-");
+        int dashSpace = oldReview.indexOf(" ", dash);  
+      
+        if (nOrAdj == true){
+          newReview += oldReview.substring(0, star);
+          newReview += randomAdjective();
+          newReview += " ";
+
+          if (starSpace > 0){
+            oldReview = oldReview.substring(starSpace+1);
+          }
+          else {
+            oldReview = "";
+          }
+        }
+
+        else if (nOrAdj == false){
+          newReview += oldReview.substring(0, dash);
+          newReview += randomNouns();
+          newReview += " ";
+
+          if (dashSpace > 0){
+            oldReview = oldReview.substring(dashSpace+1);
+          } 
+          else {
+            oldReview = "";
+          }
+        }
+      }
+
+      newReview += oldReview;
+      return newReview;
+      
+    }
+}
